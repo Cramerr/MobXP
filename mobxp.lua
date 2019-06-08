@@ -72,7 +72,7 @@ function OnGameTooltipSetUnit(tooltip)
         local guid = UnitGUID(unit)
         if (guid) then
             local type, id = DetermineUnitType(guid)
-            if type == 'Creature' then
+            if type == 'Creature' and UnitCanAttack("player","mouseover") then
                 xpNeeded = (UnitXPMax("player") - UnitXP("player")) / CalcXp()
                 tooltip:AddDoubleLine((UnitXPMax("player") - UnitXP("player")), 'xp remaining in level')
                 tooltip:AddDoubleLine(CalcXp(), 'xp per mob')
