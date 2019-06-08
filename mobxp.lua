@@ -60,6 +60,9 @@ end
 function OnGameTooltipSetUnit(tooltip)
     local unit = tooltip:GetUnit()
     if unit then
-        tooltip:AddDoubleLine(CalcXp(), 'xp per mob')
+        xpNeeded = (UnitXPMax("player") - UnitXP("player")) / CalcXp()
+                tooltip:AddDoubleLine((UnitXPMax("player") - UnitXP("player")), 'xp remaining in level')
+                tooltip:AddDoubleLine(CalcXp(), 'xp per mob')
+                tooltip:AddDoubleLine(math.floor(xpNeeded), 'mobs to level')
     end
 end
