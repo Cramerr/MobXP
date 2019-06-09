@@ -20,14 +20,14 @@ local function CalcXp()
         -- need gray level "g"
         if (p < 6) then g = 0; end
         if (p > 5 and p < 40) then
-            g = p - 5 - floor(p/10);
+            g = p - 5 - math.ceil(p/10);
         end
         if (p > 39) then
             g = p - 1 - floor(p/5);
         end
         if (t > g) then
             -- need zero difference "z"
-            if (p < 8) then z = 5; end
+            if (p < 8) then z = 6; end
             if (p > 7 and p < 10) then z = 6; end
             if (p > 9 and p < 12 ) then z = 7; end
             if (p > 11 and p < 16 ) then z = 8; end
@@ -77,10 +77,11 @@ function MobXPTooltip(tooltip)
                     tooltip:AddDoubleLine('XP turned off')
                 else
                     local xpPerMob = CalcXp()
-                    xpNeeded = (UnitXPMax("player") - UnitXP("player")) / xpPerMob
+                    local mobsToLevel = (UnitXPMax("player") - UnitXP("player")) / xpPerMob
                     tooltip:AddDoubleLine(xpPerMob, 'xp per mob')
-                    tooltip:AddDoubleLine(math.ceil(xpNeeded), 'mobs to level')
+                    tooltip:AddDoubleLine(math.ceil(mobsToLevel), 'mobs to level')
                 end
             end
         end
     end
+end
