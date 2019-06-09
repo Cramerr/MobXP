@@ -77,10 +77,11 @@ function MobXPTooltip(tooltip)
                     tooltip:AddDoubleLine('XP turned off')
                 else
                     local xpPerMob = CalcXp()
-                    xpNeeded = (UnitXPMax("player") - UnitXP("player")) / xpPerMob
+                    local mobsToLevel = (UnitXPMax("player") - UnitXP("player")) / xpPerMob
                     tooltip:AddDoubleLine(xpPerMob, 'xp per mob')
-                    tooltip:AddDoubleLine(math.ceil(xpNeeded), 'mobs to level')
+                    tooltip:AddDoubleLine(math.ceil(mobsToLevel), 'mobs to level')
                 end
             end
         end
     end
+end
