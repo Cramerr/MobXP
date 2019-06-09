@@ -1,6 +1,6 @@
 do
     GameTooltip:HookScript('OnTooltipSetUnit', function(self)
-        OnGameTooltipSetUnit(self)
+        MobXPTooltip(self)
     end)
 end
 
@@ -66,18 +66,21 @@ local function DetermineUnitType(guid)
     return type
 end
 
-function OnGameTooltipSetUnit(tooltip)
+function MobXPTooltip(tooltip)
     local name, unit = tooltip:GetUnit()
     if unit then
         local guid = UnitGUID(unit)
         if (guid) then
             local type, id = DetermineUnitType(guid)
             if type == 'Creature' and UnitCanAttack("player","mouseover") then
-                xpNeeded = (UnitXPMax("player") - UnitXP("player")) / CalcXp()
-                tooltip:AddDoubleLine((UnitXPMax("player") - UnitXP("player")), 'xp remaining in level')
-                tooltip:AddDoubleLine(CalcXp(), 'xp per mob')
-                tooltip:AddDoubleLine(math.ceil(xpNeeded), 'mobs to level')
+                if IsXPUserDisabled() then
+                    tooltip:AddDoubleLine('XP turned off')
+                else
+                    local xpPerMob = CalcXp()
+                    xpNeeded = (UnitXPMax("player") - UnitXP("player")) / xpPerMob
+                    tooltip:AddDoubleLine(xpPerMob, 'xp per mob')
+                    tooltip:AddDoubleLine(math.ceil(xpNeeded), 'mobs to level')
+                end
             end
         end
     end
-end
